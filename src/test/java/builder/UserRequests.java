@@ -7,7 +7,6 @@ import model.User;
 import static io.restassured.RestAssured.given;
 
 public class UserRequests extends BaseClass {
-    private static String accessToken = null;
 
     private final static String USER_PATH = "/api/auth/";
 

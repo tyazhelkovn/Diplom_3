@@ -1,8 +1,5 @@
 package builder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import base.BaseClass;
 import io.restassured.response.Response;
 import model.User;

@@ -1,91 +1,74 @@
-import builder.UserRequests;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
-import model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageobjects.AuthorizationPage;
+import steps.Steps;
 
-import static com.codeborne.selenide.Selenide.open;
 
 public class AuthorizationTests {
-    AuthorizationPage authorizationPage = new AuthorizationPage();
-    UserRequests userRequests = new UserRequests();
-    User user;
+    Steps steps = new Steps();
 
     @Before
     public void startUp() {
-        System.setProperty("webdriver.chrome.driver", "/Users/ntyazhelkov/Downloads/WebDriver/bin/chromedriver");
-        authorizationPage = open("https://stellarburgers.nomoreparties.site",
-                AuthorizationPage.class);
-        WebDriverRunner.getWebDriver().manage().window().maximize();
+        steps.openPageStep();
     }
 
     @After
     public void tearDown() {
-        String accessToken = userRequests.loginUser(user).then().extract().body().path("accessToken");
-        userRequests.deleteUser(accessToken);
+        steps.removeUserStep();
     }
 
     @Test
     public void successAuthorizationThroughPersonCabinet () {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickPersonCabinetButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.getMakeBurgerButton().should(Condition.exactText("Соберите бургер"));
+        steps.createUserStep();
+        steps.clickPersonCabinetButtonStep();
+        steps.authorizationStep();
+        steps.checkExistingConstructorSpaceStep();
     }
 
     @Test
     public void successAuthorizationThroughEntryToAccount () {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickEntryToAccountButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.getMakeBurgerButton().should(Condition.exactText("Соберите бургер"));
+        steps.createUserStep();
+        steps.clickEntryToAccountButtonStep();
+        steps.authorizationStep();
+        steps.checkExistingConstructorSpaceStep();
     }
 
     @Test
     public void successAuthorizationThroughRegistration () {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickEntryToAccountButton();
-        authorizationPage.clickToRegistrationButton();
-        authorizationPage.clickToAuthorizationButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.getMakeBurgerButton().should(Condition.exactText("Соберите бургер"));
+        steps.createUserStep();
+        steps.clickEntryToAccountButtonStep();
+        steps.clickToRegistrationButtonStep();
+        steps.clickToAuthorizationButtonStep();
+        steps.authorizationStep();
+        steps.checkExistingConstructorSpaceStep();
     }
 
     @Test
     public void successAuthorizationThroughRecoveryPassword () {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickEntryToAccountButton();
-        authorizationPage.clickRestorePasswordButton();
-        authorizationPage.clickToAuthorizationButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.getMakeBurgerButton().should(Condition.exactText("Соберите бургер"));
+        steps.createUserStep();
+        steps.clickEntryToAccountButtonStep();
+        steps.clickRestorePasswordButtonStep();
+        steps.clickToAuthorizationButtonStep();
+        steps.authorizationStep();
+        steps.checkExistingConstructorSpaceStep();
     }
 
     @Test
     public void successAuthorizationAndMoveToPersonCabinet() {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickEntryToAccountButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.clickPersonCabinetButton();
-        authorizationPage.getProfileLabel().should(Condition.exactText("Профиль"));
+        steps.createUserStep();
+        steps.clickEntryToAccountButtonStep();
+        steps.authorizationStep();
+        steps.clickPersonCabinetButtonStep();
+        steps.checkProfileLabelStep();
     }
 
     @Test
     public void successAuthorizationAndMoveToConstructor() {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
-        userRequests.createUser(user);
-        authorizationPage.clickEntryToAccountButton();
-        authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
-        authorizationPage.clickPersonCabinetButton();
-        authorizationPage.clickConstructorButton();
-        authorizationPage.getMakeBurgerButton().should(Condition.exactText("Соберите бургер"));
+        steps.createUserStep();
+        steps.clickEntryToAccountButtonStep();
+        steps.authorizationStep();
+        steps.clickPersonCabinetButtonStep();
+        steps.clickConstructorButtonStep();
+        steps.checkExistingConstructorSpaceStep();
     }
 }

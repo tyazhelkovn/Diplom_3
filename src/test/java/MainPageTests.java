@@ -1,3 +1,6 @@
+import java.util.Random;
+
+import model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -5,10 +8,14 @@ import steps.Steps;
 
 public class MainPageTests {
     Steps steps = new Steps();
-
+    User user;
     @Before
     public void startUp() {
         steps.openPageStep();
+        int random = new Random().nextInt(10);
+        user = new User("test_nt_" + random + "@ya.ru",
+                "test_pass",
+                "test_nt_" + random);
     }
 
     @After
@@ -18,9 +25,9 @@ public class MainPageTests {
 
     @Test
     public void exitFromAccount () {
-        steps.createUserStep();
+        steps.createUserStep(user);
         steps.clickPersonCabinetButtonStep();
-        steps.authorizationStep();
+        steps.authorizationStep(user);
         steps.clickPersonCabinetButtonStep();
         steps.clickExitButtonStep();
         steps.checkEntryLabelStep();
@@ -40,7 +47,7 @@ public class MainPageTests {
 
     @Test
     public void toRolls () {
-        steps.clickFillingsButtonStep();
+        steps.clickSaucesButtonStep();
         steps.clickRollsButtonStep();
         steps.checkRollsLabelStep();
     }

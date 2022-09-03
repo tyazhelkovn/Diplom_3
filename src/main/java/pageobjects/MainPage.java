@@ -34,17 +34,17 @@ public class MainPage {
     @FindBy(how = How.XPATH,using = ".//span[text()='Начинки']")
     private SelenideElement fillingsButton;
 
-    //локатор надписи Булки
-    @FindBy(how = How.XPATH,using = ".//h2[text()='Булки']")
-    private SelenideElement rollsLabel;
+    //Меню Сосусы после выбора
+    @FindBy(how = How.XPATH,using = ".//div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Соусы']")
+    private SelenideElement sauceMenu;
 
-    //локатор надписи Соусы
-    @FindBy(how = How.XPATH,using = ".//h2[text()='Соусы']")
-    private SelenideElement saucesLabel;
+    //Меню Начинки после выбора
+    @FindBy(how = How.XPATH,using = ".//div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Начинки']")
+    private SelenideElement fillingMenu;
 
-    //локатор надписи Начинки
-    @FindBy(how = How.XPATH,using = ".//h2[text()='Начинки']")
-    private SelenideElement fillingsLabel;
+    //Меню Булки после выбора
+    @FindBy(how = How.XPATH,using = ".//div[@class='tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']/span[text()='Булки']")
+    private SelenideElement rollsMenu;
 
 
     public void clickPersonCabinetButton() {
@@ -75,15 +75,15 @@ public class MainPage {
         fillingsButton.click();
     }
 
-    public SelenideElement getRollsLabel() {
-        return rollsLabel;
+    public SelenideElement getRollsMenu() {
+        return rollsMenu;
     }
 
-    public SelenideElement getSaucesLabel() {
-        return saucesLabel;
+    public SelenideElement getSauceMenu() {
+        return sauceMenu;
     }
 
-    public SelenideElement getFillingsLabel() {
-        return fillingsLabel;
+    public SelenideElement getFillingMenu() {
+        return fillingMenu;
     }
 }

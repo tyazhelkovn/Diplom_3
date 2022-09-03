@@ -14,11 +14,12 @@ public class Steps {
     AuthorizationPage authorizationPage = new AuthorizationPage();
     UserRequests userRequests = new UserRequests();
     User user;
+    public static final String BASE_URL = "https://stellarburgers.nomoreparties.site";
 
     @Step
     public void openPageStep() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
-        authorizationPage = open("https://stellarburgers.nomoreparties.site",
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexdriver");
+        authorizationPage = open(BASE_URL,
                 AuthorizationPage.class);
         WebDriverRunner.getWebDriver().manage().window().maximize();
     }
@@ -32,8 +33,7 @@ public class Steps {
     }
 
     @Step("Creating new user")
-    public void createUserStep() {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
+    public void createUserStep(User user) {
         userRequests.createUser(user);
     }
 
@@ -43,7 +43,7 @@ public class Steps {
     }
 
     @Step("Step of Authorization")
-    public void authorizationStep() {
+    public void authorizationStep(User user) {
         authorizationPage.authorizationPage(user.getEmail(), user.getPassword());
     }
 
@@ -99,7 +99,7 @@ public class Steps {
 
     @Step("Check sauce's label on main page")
     public void checkSaucesLabelStep() {
-        authorizationPage.getSaucesLabel().should(Condition.exactText("Соусы"));
+        authorizationPage.getSauceMenu().shouldBe(Condition.visible);
     }
 
     @Step("Click fillings button")
@@ -109,7 +109,7 @@ public class Steps {
 
     @Step("Check filling's label on main page")
     public void checkFillingsLabelStep() {
-        authorizationPage.getFillingsLabel().should(Condition.exactText("Начинки"));
+        authorizationPage.getFillingMenu().shouldBe(Condition.visible);
     }
 
     @Step("Click rolls button")
@@ -119,18 +119,16 @@ public class Steps {
 
     @Step("Check roll's label on main page")
     public void checkRollsLabelStep() {
-        authorizationPage.getRollsLabel().should(Condition.exactText("Булки"));
+        authorizationPage.getRollsMenu().shouldBe(Condition.visible);
     }
 
     @Step("Success registration")
-    public void successRegistrationStep() {
-        user = new User("test_nt@ya.ru", "test_nt", "test_nt");
+    public void successRegistrationStep(User user) {
         authorizationPage.registrationPage(user.getEmail(), user.getPassword(), user.getName());
     }
 
     @Step("Fail registration with invalid password")
-    public void failRegistrationStep() {
-        user = new User("test_nt@ya.ru", "te", "test_nt");
+    public void failRegistrationStep(User user) {
         authorizationPage.registrationPage(user.getEmail(), user.getPassword(), user.getName());
     }
 
